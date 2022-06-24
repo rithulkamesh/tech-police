@@ -1,6 +1,6 @@
-# tauri-discord-bot
+# Tech Police
 
-This bot is based off of the amazing [Svelte Bot](https://github.com/pngwn/svelte-bot/). It's hosted on a DigitalOcean App instance that will automatically detect any updates to the `main` branch and deploy those changes.
+This bot is based off of the amazing [Tauri Discord Bot](). It's hosted on a DigitalOcean App instance that will automatically detect any updates to the `main` branch and deploy those changes.
 
 ## Configuration
 

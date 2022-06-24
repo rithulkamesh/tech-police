@@ -7,47 +7,55 @@ import { add_thread_prefix } from '../utils/threads';
 import { get_title_from_url } from '../utils/unfurl';
 
 export default event({
-	name: 'messageCreate',
-	run: async ({}, message) => {
-		const should_ignore =
-			message.author.bot ||
-			message.channel.type != 'GUILD_TEXT' ||
-			message.type != 'DEFAULT' ||
-			!AUTO_THREAD_CHANNELS.includes(message.channelId);
+  name: 'messageCreate',
+  run: async ({ }, message) => {
 
-		if (should_ignore) return;
+    if (message.channel.id === "982722078253928468") {
+      await message.delete();
+      if (!message.member?.kickable) return;
+      await message.member?.kick();
+      return
+    }
 
-		const raw_name = await get_thread_name(message);
+    const should_ignore =
+      message.author.bot ||
+      message.channel.type != 'GUILD_TEXT' ||
+      message.type != 'DEFAULT' ||
+      !AUTO_THREAD_CHANNELS.includes(message.channelId);
 
-		const name = HELP_CHANNELS.includes(message.channelId)
-			? add_thread_prefix(raw_name, false)
-			: raw_name;
+    if (should_ignore) return;
 
-		await message.channel.threads
-			.create({
-				name: name.slice(0, 100),
-				startMessage: message,
-			})
-			.then(send_instruction_message);
-	},
+    const raw_name = await get_thread_name(message);
+
+    const name = HELP_CHANNELS.includes(message.channelId)
+      ? add_thread_prefix(raw_name, false)
+      : raw_name;
+
+    await message.channel.threads
+      .create({
+        name: name.slice(0, 100),
+        startMessage: message,
+      })
+      .then(send_instruction_message);
+  },
 });
 
 function get_thread_name(message: Message): string | Promise<string> {
-	const url = message.content.match(url_regex());
+  const url = message.content.match(url_regex());
 
-	// If the url can't be matched
-	if (!url) return `${message.content.replace(url_regex(), '')}`;
+  // If the url can't be matched
+  if (!url) return `${message.content.replace(url_regex(), '')}`;
 
-	return get_title_from_url(url[0]);
+  return get_title_from_url(url[0]);
 }
 
 function send_instruction_message(thread: ThreadChannel) {
-	const base_description =
-		"I've created a thread for your message. Please continue any relevant discussion in this thread. You can rename it with the `/thread rename` command if I failed to set a proper name for it.";
+  const base_description =
+    "I've created a thread for your message. Please continue any relevant discussion in this thread. You can rename it with the `/thread rename` command if I failed to set a proper name for it.";
 
-	const description = HELP_CHANNELS.includes(thread.parentId!)
-		? `${base_description}\n\nWhen your problem is solved close the thread with the \`/thread solve\` command.`
-		: base_description;
+  const description = HELP_CHANNELS.includes(thread.parentId!)
+    ? `${base_description}\n\nWhen your problem is solved close the thread with the \`/thread solve\` command.`
+    : base_description;
 
-	return thread.send(wrap_in_embed(description) as MessageOptions);
+  return thread.send(wrap_in_embed(description) as MessageOptions);
 }

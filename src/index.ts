@@ -5,25 +5,25 @@ import { Intents } from 'discord.js';
 import healthcheck from './healthcheck';
 
 const client = new JellyCommands({
-	commands: 'src/commands',
-	events: 'src/events',
+  commands: 'src/commands',
+  events: 'src/events',
 
-	clientOptions: {
-		intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
-	},
+  clientOptions: {
+    intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
+  },
 
-	dev: {
-		global: DEV_MODE,
+  dev: {
+    global: DEV_MODE,
 
-		// If we set dev to true in a command it disabled global and adds it to the guilds bellow
-		guilds: [TEST_GUILD_ID],
-	},
+    // If we set dev to true in a command it disabled global and adds it to the guilds bellow
+    guilds: [TEST_GUILD_ID],
+  },
 
-	// we can disable this but I like to see the debug messages xD - GHOST
-	debug: true,
+  // we can disable this but I like to see the debug messages xD - GHOST
+  debug: true,
 
-	// This should hopefully fix the issues in production
-	cache: DEV_MODE,
+  // This should hopefully fix the issues in production
+  cache: DEV_MODE,
 });
 
 // Auto reads the DISCORD_TOKEN environment variable

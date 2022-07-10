@@ -1,6 +1,6 @@
 # Tech Police
 
-This bot is based off of the amazing [Tauri Discord Bot](). It's hosted on a DigitalOcean App instance that will automatically detect any updates to the `main` branch and deploy those changes.
+This bot is based off of the amazing [Tauri Discord Bot](https://github.com/tauri-apps/tauri-discord-bot). It's hosted on [Railway](https://railway.app) which automatically deploys my changes.
 
 ## Configuration
 

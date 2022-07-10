@@ -10,12 +10,23 @@ export default event({
   name: 'messageCreate',
   run: async ({ }, message) => {
 
+    // Anti-spam
     if (message.channel.id === "982722078253928468") {
       await message.delete();
       if (!message.member?.kickable) return;
       await message.member?.kick();
       return
     }
+
+    if (message.channel.id === "995730157920854126") {
+      if (message.attachments.size === 0) {
+        await message.delete();
+        return
+      }
+      await message.react("<:upvote:995731871478595664>");
+      await message.react(" <:downvote:995731864411181097>");
+    }
+
 
     const should_ignore =
       message.author.bot ||

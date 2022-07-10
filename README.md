@@ -18,7 +18,7 @@ This bot is based off of the amazing [Tauri Discord Bot](). It's hosted on a Dig
 
 ## Events
 
--   `on_message_auto_thread`: Monitors the channels set in `AUTO_THREAD_CHANNELS` and automatically turns any messages posted there into their own threads
+-   `on_message`: Monitors the channels set in `AUTO_THREAD_CHANNELS` and automatically turns any messages posted there into their own threads. Checks for the do-not-type-here channel and takes care of checking attachments and reactions in #emote-suggestions.
 
 ## Commands
 
